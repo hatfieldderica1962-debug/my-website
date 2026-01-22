@@ -1,105 +1,257 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Gift Card Shop</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GiftHub – Digital Card Store</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="page">
+      <header class="header">
+        <div class="brand">
+          <div class="brand-logo">GH</div>
+          <div class="brand-text">
+            <h1>GiftHub</h1>
+            <p>Buy prepaid cards easily with crypto</p>
+          </div>
+        </div>
+      </header>
 
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f5f5f5;
-      margin: 0;
-      padding: 0;
-    }
+      <main class="main">
+        <section class="intro">
+          <div class="intro-main">
+            <h2>Buy gift cards worldwide in minutes</h2>
+            <p>
+              Choose from popular brands, set any amount you want, pay once with
+              crypto via Trust Wallet, and receive your card details securely on
+              Telegram.
+            </p>
 
-    header {
-      background-color: #222;
-      color: white;
-      padding: 20px;
-      text-align: center;
-    }
+            <div class="intro-badges">
+              <div class="badge">
+                <span class="badge-label">Average delivery</span>
+                <strong>5–20 minutes</strong>
+              </div>
+              <div class="badge">
+                <span class="badge-label">Completed orders</span>
+                <strong>1,200+</strong>
+              </div>
+              <div class="badge">
+                <span class="badge-label">Support</span>
+                <strong>24/7 on Telegram</strong>
+              </div>
+            </div>
+          </div>
 
-    .container {
-      padding: 20px;
-      max-width: 1000px;
-      margin: auto;
-    }
+          <div class="logo-strip">
+            <span class="logo-strip-label">Popular cards on GiftHub</span>
+            <div class="logo-pill-row">
+              <div class="logo-pill">Visa</div>
+              <div class="logo-pill">Mastercard</div>
+              <div class="logo-pill">Amex</div>
+              <div class="logo-pill">Amazon</div>
+              <div class="logo-pill">Apple</div>
+              <div class="logo-pill">Google Play</div>
+              <div class="logo-pill">Steam</div>
+            </div>
+          </div>
+        </section>
 
-    .card {
-      background: white;
-      padding: 20px;
-      margin-bottom: 20px;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
+        <section class="content">
+          <div class="card card-selection">
+            <h3>Card details</h3>
 
-    .card h2 {
-      margin-top: 0;
-    }
+            <label class="field">
+              <span>Card type</span>
+              <select id="cardType">
+                <option value="Visa">Visa Gift Card</option>
+                <option value="Mastercard">Mastercard Gift Card</option>
+                <option value="Amex">American Express</option>
+                <option value="Apple">Apple Gift Card</option>
+                <option value="Google">Google Play Card</option>
+                <option value="Amazon">Amazon Gift Card</option>
+                <option value="Steam">Steam Wallet Card</option>
+                <option value="Netflix">Netflix Gift Card</option>
+                <option value="Spotify">Spotify Gift Card</option>
+                <option value="Other">Other (specify in notes)</option>
+              </select>
+            </label>
 
-    button {
-      background-color: #007bff;
-      color: white;
-      border: none;
-      padding: 10px 15px;
-      font-size: 16px;
-      cursor: pointer;
-      border-radius: 5px;
-    }
+            <label class="field">
+              <span>Total amount you want (USD)</span>
+              <input
+                id="amount"
+                type="number"
+                min="1"
+                step="1"
+                placeholder="e.g. 100"
+              />
+            </label>
 
-    button:hover {
-      background-color: #0056b3;
-    }
+            <label class="field">
+              <span>Your Telegram username</span>
+              <input
+                id="telegram"
+                type="text"
+                placeholder="@your_username"
+              />
+            </label>
 
-    footer {
-      text-align: center;
-      padding: 15px;
-      background: #222;
-      color: white;
-      margin-top: 30px;
-    }
-  </style>
-</head>
-<body>
+            <label class="field">
+              <span>Notes (optional)</span>
+              <textarea
+                id="notes"
+                rows="3"
+                placeholder="Any specific card country, denominations, or extra details..."
+              ></textarea>
+            </label>
 
-  <header>
-    <h1>Gift Card Store</h1>
-    <p>Fast • Reliable • Secure</p>
-  </header>
+            <button id="generateBtn" class="primary-btn">
+              Generate order instructions
+            </button>
 
-  <div class="container">
+            <p class="hint">
+              This is a simple order helper. There is no automatic delivery –
+              you will contact the seller via Telegram after paying.
+            </p>
+          </div>
 
-    <div class="card">
-      <h2>Amazon Gift Card</h2>
-      <p>Available amounts: $10, $25, $50, $100</p>
-      <button>Buy Now</button>
+          <div class="card card-summary">
+            <h3>Order summary & payment</h3>
+            <div id="summaryEmpty" class="summary-empty">
+              Fill in the form on the left and click
+              <strong>"Generate order instructions"</strong> to see details
+              here.
+            </div>
+
+            <div id="summaryContent" class="summary-content hidden">
+              <div class="summary-row">
+                <span>Card type</span>
+                <strong id="summaryCardType">-</strong>
+              </div>
+              <div class="summary-row">
+                <span>Total amount (USD)</span>
+                <strong id="summaryAmount">-</strong>
+              </div>
+              <div class="summary-row">
+                <span>Your Telegram</span>
+                <strong id="summaryTelegram">-</strong>
+              </div>
+              <div class="summary-row">
+                <span>Notes</span>
+                <strong id="summaryNotes">-</strong>
+              </div>
+
+              <hr />
+
+              <div class="payment-section">
+                <h4>Pay with Trust Wallet</h4>
+                <p>
+                  Send the total equivalent in crypto (USDT, USDC, or any
+                  agreed token) to this address using
+                  <strong>Trust Wallet</strong>.
+                </p>
+
+                <div class="wallet-box">
+                  <span>Wallet network</span>
+                  <strong id="walletNetwork">USDT (TRC20) recommended</strong>
+                </div>
+
+                <div class="wallet-box">
+                  <span>Wallet address</span>
+                  <div class="wallet-address-row">
+                    <strong id="walletAddress"
+                      >TXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</strong
+                    >
+                    <button id="copyAddressBtn" class="ghost-btn">
+                      Copy
+                    </button>
+                  </div>
+                </div>
+
+                <p class="hint">
+                  Replace the wallet address above with your real Trust Wallet
+                  receive address before using this page.
+                </p>
+              </div>
+
+              <hr />
+
+              <div class="contact-section">
+                <h4>Contact on Telegram</h4>
+                <p>
+                  After payment, send a message on Telegram with your
+                  transaction proof and order details.
+                </p>
+
+                <div class="telegram-box">
+                  <span>Seller Telegram</span>
+                  <a
+                    id="sellerTelegramLink"
+                    href="https://t.me/your_telegram_here"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <strong id="sellerTelegramHandle">@your_telegram_here</strong>
+                  </a>
+                </div>
+
+                <button id="copyOrderBtn" class="secondary-btn">
+                  Copy order details for Telegram
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section class="extra-info">
+          <div class="features-grid">
+            <div class="feature-card">
+              <h3>Why people use GiftHub</h3>
+              <ul>
+                <li>Custom card amounts – no fixed packages.</li>
+                <li>Perfect for subscriptions, online shopping, and gifts.</li>
+                <li>Crypto only – no bank or card needed.</li>
+              </ul>
+            </div>
+            <div class="feature-card">
+              <h3>How it works</h3>
+              <ol>
+                <li>Select your card type and total amount.</li>
+                <li>Send payment using Trust Wallet to the address shown.</li>
+                <li>
+                  Message the seller on Telegram with proof and your order
+                  details.
+                </li>
+                <li>Receive your card codes or screenshots on Telegram.</li>
+              </ol>
+            </div>
+            <div class="feature-card">
+              <h3>Important notes</h3>
+              <ul>
+                <li>Double-check the wallet address before every payment.</li>
+                <li>
+                  GiftHub is not affiliated with Visa, Mastercard, or any brand
+                  listed.
+                </li>
+                <li>Only trade with people you fully trust.</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer class="footer">
+        <p>
+          Built for demo purposes. Always double-check wallet addresses and only
+          trade with people you trust.
+          |
+          <a href="admin.html">Admin panel</a>
+        </p>
+      </footer>
     </div>
 
-    <div class="card">
-      <h2>Apple / iTunes Gift Card</h2>
-      <p>Available amounts: $15, $25, $50</p>
-      <button>Buy Now</button>
-    </div>
-
-    <div class="card">
-      <h2>Google Play Gift Card</h2>
-      <p>Available amounts: $10, $25, $50</p>
-      <button>Buy Now</button>
-    </div>
-
-    <div class="card">
-      <h2>Contact</h2>
-      <p>
-        Email: your@email.com<br>
-        WhatsApp / Telegram: +123456789
-      </p>
-    </div>
-
-  </div>
-
-  <footer>
-    <p>© 2026 Gift Card Store. All rights reserved.</p>
-  </footer>
-
-</body>
+    <script src="script.js"></script>
+  </body>
 </html>
+
